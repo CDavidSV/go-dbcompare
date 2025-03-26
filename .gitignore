@@ -19,3 +19,10 @@
 
 # Go workspace file
 go.work
+*.crt
+
+# environment files
+*.env
+
+# config file
+db-compare-config.json
