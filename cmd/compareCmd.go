@@ -45,11 +45,12 @@ var compareCmd = cobra.Command{
 		}
 
 		helpers.ClearLine()
-		fmt.Printf(config.SuccessStyle.Render("Connected to %s"), conf.DB1.Name)
+		fmt.Printf(config.SuccessStyle.Render("Connected to %s\n"), conf.DB1.Name)
 		helpers.SaveCursorPosition()
 
 		s.Suffix = fmt.Sprintf(config.InfoStyle.Render(" Connecting to %s"), conf.DB2.Name)
 		s.Start()
+
 		DB2, err := helpers.ConnectDB("postgres", conf.DB2)
 		s.Stop()
 		if err != nil {
@@ -58,7 +59,10 @@ var compareCmd = cobra.Command{
 			os.Exit(1)
 		}
 
+		helpers.ClearLine()
+		fmt.Printf(config.SuccessStyle.Render("Connected to %s\n\n"), conf.DB2.Name)
 		helpers.SaveCursorPosition()
+
 		s.Suffix = config.InfoStyle.Render(" Running comparison")
 		s.Start()
 
@@ -74,10 +78,7 @@ var compareCmd = cobra.Command{
 		fmt.Println(config.SuccessStyle.Render("✔ Comparison finished"))
 
 		if name == "" {
-			date := time.Now()
-			dateString := date.Format("2006-01-02T15:04")
-
-			outputPath += "Comparison_Result_" + dateString + ".xlsx"
+			outputPath += "Comparison_Result.xlsx"
 		} else {
 			outputPath += name + ".xlsx"
 		}
@@ -88,12 +89,13 @@ var compareCmd = cobra.Command{
 			os.Exit(1)
 		}
 
-		err = f.Write(file)
+		_, err = f.WriteTo(file)
 		if err != nil {
 			fmt.Println(config.ErrorStyle.Render("Error saving result file:"), err)
 			os.Exit(1)
 		}
 
+		file.Close()
 		fmt.Println(config.SuccessStyle.Render("✔ Result file saved successfully"))
 	},
 }

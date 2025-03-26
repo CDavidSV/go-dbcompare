@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	clearLine          = "\033[u\033[K"
+	clearLine          = "\033[u\033[K\r"
 	saveCursorPosition = "\033[s"
 )
 
