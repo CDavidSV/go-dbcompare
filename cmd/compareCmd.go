@@ -43,6 +43,7 @@ var compareCmd = cobra.Command{
 			fmt.Printf(config.ErrorStyle.Render("Error connecting to %s\nError: %s\n"), conf.DB1.Name, err)
 			os.Exit(1)
 		}
+		defer DB1.Close()
 
 		helpers.ClearLine()
 		fmt.Printf(config.SuccessStyle.Render("Connected to %s\n"), conf.DB1.Name)
@@ -58,6 +59,7 @@ var compareCmd = cobra.Command{
 			fmt.Printf(config.ErrorStyle.Render("Error connecting to %s\nError: %s\n"), conf.DB2.Name, err)
 			os.Exit(1)
 		}
+		defer DB2.Close()
 
 		helpers.ClearLine()
 		fmt.Printf(config.SuccessStyle.Render("Connected to %s\n\n"), conf.DB2.Name)
@@ -73,6 +75,7 @@ var compareCmd = cobra.Command{
 			fmt.Printf(config.ErrorStyle.Render("Error running database comparison: %s\n"), err)
 			os.Exit(1)
 		}
+		defer f.Close()
 
 		helpers.ClearLine()
 		fmt.Println(config.SuccessStyle.Render("✔ Comparison finished"))
