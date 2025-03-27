@@ -81,7 +81,9 @@ var compareCmd = cobra.Command{
 		fmt.Println(config.SuccessStyle.Render("✔ Comparison finished"))
 
 		if name == "" {
-			outputPath += "Comparison_Result.xlsx"
+			timestamp := time.Now().Format("20060102_150405")
+
+			outputPath += "Comparison_Result_" + timestamp + ".xlsx"
 		} else {
 			outputPath += name + ".xlsx"
 		}
@@ -110,7 +112,7 @@ func runDBComparison(DB1Name string, DB1 *sql.DB, DB2Name string, DB2 *sql.DB) (
 	}
 
 	f := excelize.NewFile()
-	sheetName := "Database Comparison Result"
+	sheetName := "Table Comparison"
 
 	f.SetSheetName(f.GetSheetName(0), sheetName)
 
@@ -164,9 +166,6 @@ func runDBComparison(DB1Name string, DB1 *sql.DB, DB2Name string, DB2 *sql.DB) (
 	f.SetCellValue(sheetName, "B1", fmt.Sprintf("Database 1 (%s)", DB1Name))
 	f.SetCellValue(sheetName, "C1", fmt.Sprintf("Database 2 (%s)", DB2Name))
 	f.SetCellStyle(sheetName, "A1", "C1", borderStyle)
-	f.SetCellValue(sheetName, "F1", fmt.Sprintf("Tables missing in %s", DB1Name))
-	f.SetCellValue(sheetName, "G1", fmt.Sprintf("Tables missing in %s", DB2Name))
-	f.SetCellStyle(sheetName, "F1", "G1", borderStyle)
 
 	// Fill in the table data
 	firstCell := 2
@@ -220,22 +219,30 @@ func runDBComparison(DB1Name string, DB1 *sql.DB, DB2Name string, DB2 *sql.DB) (
 
 		firstCell += 7
 	}
+	f.SetColWidth(sheetName, "B", "C", 70)
+
+	// Create a new sheet to show missing tables in each database
+	sheetName = "Missing tables"
+	f.NewSheet(sheetName)
+
+	f.SetCellValue(sheetName, "A1", fmt.Sprintf("Tables missing in %s (Present in %s)", DB1Name, DB2Name))
+	f.SetCellValue(sheetName, "B1", fmt.Sprintf("Tables missing in %s (Present in %s)", DB2Name, DB1Name))
+	f.SetCellStyle(sheetName, "A1", "B1", borderStyle)
 
 	// Add missing tables
 	for i, v := range result.MissingTablesInDB1 {
-		cellNameDB1, _ := excelize.CoordinatesToCellName(6, i+2)
+		cellNameDB1, _ := excelize.CoordinatesToCellName(1, i+2)
 		f.SetCellValue(sheetName, cellNameDB1, v)
 		f.SetCellStyle(sheetName, cellNameDB1, cellNameDB1, borderStyle)
 	}
 
 	for i, v := range result.MissingTablesInDB2 {
-		cellNameDB2, _ := excelize.CoordinatesToCellName(7, i+2)
+		cellNameDB2, _ := excelize.CoordinatesToCellName(2, i+2)
 		f.SetCellValue(sheetName, cellNameDB2, v)
 		f.SetCellStyle(sheetName, cellNameDB2, cellNameDB2, borderStyle)
 	}
 
-	f.SetColWidth(sheetName, "B", "C", 70)
-	f.SetColWidth(sheetName, "F", "G", 60)
+	f.SetColWidth(sheetName, "A", "B", 70)
 
 	return f, nil
 }

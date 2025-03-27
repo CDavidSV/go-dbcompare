@@ -26,3 +26,6 @@ go.work
 
 # config file
 db-compare-config.json
+
+# result files
+*.xlsx
