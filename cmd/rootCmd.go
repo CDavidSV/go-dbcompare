@@ -3,10 +3,11 @@ package cmd
 import (
 	"log"
 
+	"github.com/CDavidSV/db-comparation-tool/cmd/generate"
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = cobra.Command{
+var rootCmd = &cobra.Command{
 	Use:   "db-diff",
 	Short: "Program that compares two databases",
 	Long:  "CLI tool that helps identify differences in tables, and exporting results to an Excel file. Useful for database migrations, audits, and integrity checks.",
@@ -22,5 +23,6 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(&compareCmd)
+	rootCmd.AddCommand(compareCmd)
+	rootCmd.AddCommand(generate.GenerateCmd)
 }
