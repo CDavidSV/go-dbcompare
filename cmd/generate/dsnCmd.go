@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/CDavidSV/db-comparation-tool/internal/config"
-	"github.com/CDavidSV/db-comparation-tool/internal/helpers"
+	"github.com/CDavidSV/go-dbcompare/internal/config"
+	"github.com/CDavidSV/go-dbcompare/internal/helpers"
 	"github.com/spf13/cobra"
 )
 

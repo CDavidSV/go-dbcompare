@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/CDavidSV/db-comparation-tool/internal"
+	"github.com/CDavidSV/go-dbcompare/internal"
 	_ "github.com/lib/pq"
 	"github.com/xuri/excelize/v2"
 )

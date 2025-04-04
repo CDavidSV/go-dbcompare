@@ -3,7 +3,7 @@ package cmd
 import (
 	"log"
 
-	"github.com/CDavidSV/db-comparation-tool/cmd/generate"
+	"github.com/CDavidSV/go-dbcompare/cmd/generate"
 	"github.com/spf13/cobra"
 )
 

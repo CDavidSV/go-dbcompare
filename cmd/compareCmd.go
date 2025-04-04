@@ -5,9 +5,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/CDavidSV/db-comparation-tool/internal"
-	"github.com/CDavidSV/db-comparation-tool/internal/config"
-	"github.com/CDavidSV/db-comparation-tool/internal/helpers"
+	"github.com/CDavidSV/go-dbcompare/internal"
+	"github.com/CDavidSV/go-dbcompare/internal/config"
+	"github.com/CDavidSV/go-dbcompare/internal/helpers"
 	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 )

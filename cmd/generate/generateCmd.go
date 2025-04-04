@@ -3,7 +3,7 @@ package generate
 import (
 	"fmt"
 
-	"github.com/CDavidSV/db-comparation-tool/internal/config"
+	"github.com/CDavidSV/go-dbcompare/internal/config"
 	"github.com/spf13/cobra"
 )
 

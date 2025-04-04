@@ -1,6 +1,6 @@
 package main
 
-import "github.com/CDavidSV/db-comparation-tool/cmd"
+import "github.com/CDavidSV/go-dbcompare/cmd"
 
 func main() {
 	cmd.Execute()
