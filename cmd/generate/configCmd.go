@@ -111,6 +111,18 @@ func askConnParamsDB(dbID uint8, name *string, host *string, port *uint16, datab
 			Label:       "Database Port",
 			Placeholder: "5432",
 			Required:    true,
+			ValidationFunction: func(value string) error {
+				_, err := strconv.ParseUint(value, 10, 16)
+				if err != nil {
+					return fmt.Errorf("port must be a number")
+				}
+
+				if len(value) > 5 {
+					return fmt.Errorf("port must be less than 6 digits")
+				}
+
+				return nil
+			},
 		}, &output))
 		if _, err := p.Run(); err != nil {
 			log.Fatal(err)
